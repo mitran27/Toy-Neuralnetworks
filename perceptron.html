@@ -1,0 +1,106 @@
+<html>
+<head></head>
+<body>
+hello world
+
+
+</body>
+<script>
+	//perceptron cannt handle non linearl seperable data
+//perceptron  summation and activation 
+/* learn ==>calculte the input* weight/input*weight+bias and activated
+            calculate error with actual and target(result we expext)
+            use adjust weight->with the help of learnrate and error
+*/
+
+//epochs will call the learn function for each of its array of inputs
+var x=5
+console.log(x)
+var input=[[0,0],[0,1],[1,0],[1,1]]//lets assume 3rd btn is working
+var target=[0,0,0,1]
+var weight=[0,0,0]//initially assume all weights are zero
+var learningRate = 0.01;
+var trials = 100;
+var threshold = 0.00;
+trial(input,target,weight,learningRate,threshold,trials)
+var trial=1//no of epochs to be called
+function summation(vector1,vector2){//just dot product
+	var sum=0;
+
+	for(var i=0;i<vector1.length;i++)
+	{
+		sum+=vector1[i]*vector2[i];
+		
+	}
+	return sum;
+	
+}
+function activation(summation,threshold){//activate if it exceed threshold there are 7 types of activation function
+	if(summation>threshold){
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
+function forwardpass(input,weight,threshold){//i/p process o/o
+	return(activation(summation(input,weight)+weight[2],threshold))
+}
+function calculaterror(target,actual){
+	return target-actual
+}
+function adjust_weights(input,weight,learnrate,error){
+	
+	for(var i=0;i<input.length;i++)
+	{
+	
+		weight[i]=weight[i]+(learnrate*error*input[i]);//if input[i] valid it adds wight to prev weight if it is zero is ignored
+//if no eror is zero it is ignored
+		
+	
+		
+	}
+	//calculating bias
+	weight[2]+=(learnrate*error)
+	return weight;
+	
+}
+function learn(input,weight,learnrate,target,threshold){
+	//do untill you get error 0
+// for toy nn we are calling epochs untill we get error nearly equal to zero 
+
+var result=forwardpass(input,weight,threshold);
+var error=calculaterror(target,result);
+
+weight=adjust_weights(input,weight,learnrate,error)
+return weight
+
+
+
+
+
+}
+//one epoch ->is when an ENTIRE dataset is passed forward and backward through the neural network only ONCE
+function epoch(input,target,weight,learnrate,threshold){
+	//and array of input passing each set of input to learn
+	console.log('epoch')
+	var weight;
+	for(var i=0;i<input.length;i++){//it is just one epoch all the array of the data set are one epoch
+		weight=learn(input[i],weight,learnrate,target[i],threshold)
+	}
+	
+	
+
+}
+function trial(input,target,weight,learnrate,threshold,trials){
+	var newweight;
+	for(var i=0;i<trials;i++){
+epoch(input,target,weight,learnrate,threshold)
+console.log(weight)
+
+	}
+	
+}
+</script>
+
+</html>
