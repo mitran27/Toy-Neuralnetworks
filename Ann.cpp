@@ -1,4 +1,3 @@
-// Online C++ compiler to run C++ program online
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -9,14 +8,20 @@ class Matrix{
     int row;
     vector<float> values;
   public:
-    Matrix(int r, int c)
-    {
-        values.resize(r*c);
+    Matrix(int r, int c,int random=0)
+    {   row=r;
+        col=c;
+        srand( (unsigned)time( NULL ) );
         for (int i =0; i < r*c; i++){
-              int b = rand() % 20 + 1;
-              values.push_back(b);
-              cout << values[i] << endl;
+              float r=(float)rand()/RAND_MAX;    
+              if(random)
+              values.push_back(r-0.5);
+              else
+              values.push_back(0);
+              
+              //cout << (float)values[i]<<r << endl;
     }
+   
     }
     
     int ind(int r, int c) // get indice of vector if row, adn col is given
@@ -30,13 +35,20 @@ class Matrix{
     
     int*  shape()
     { 
-        int arr[2];
+        static int arr[2];
  
         arr[0] = row;
         arr[1] = col;
         return arr;
     }
-    
+    void print()
+    {
+        for (int i=0;i<row;i++){
+                for (int j=0;j<col;j++){
+                    cout<<value_at(i,j)<<endl;
+                }
+            }
+    }
     Matrix operator*(Matrix mat2)
     {
         if(col==mat2.row){
@@ -65,7 +77,6 @@ class Matrix{
             int c=col;
             for (int i=0;i<r;i++){
                 for (int j=0;j<c;j++){
-                    float result=0.0f;
                     output.values[output.ind(i,j)]=value_at(i,j)+mat2.value_at(i,j);
                 }
             }
@@ -96,19 +107,33 @@ class Linear
     Linear(int prev_dimension,int curr_dimension)
     {
         Matrix weight(prev_dimension,curr_dimension);
-        Matrix bias(1,curr_dimension);
-        
-        
+        //Matrix bias(1,curr_dimension);
+    }
+    Forward(Matrix input)
+    {
+        Matrix out=intput*weight
     }
 };
 class ANN
 {
     public :
-    vector<int> Model;
+    vector<Linear> Model;
     vector<Matrix> inputs;//input at each layer 
 };
 int main() {
     // Write C++ code here
-    Matrix test(5,6);
+    /*
+    Matrix test1(3,3,1);
+    cout<<"\n\n";
+    Matrix test2(3,3,1);
+    cout<<"\n\n";
+    Matrix out=test1*test2;
+    int *x;
+    x=out.shape();
+
+    cout<<*x<<*(x+1);
+    //cout<<*(p+1);*/
+    
+    
     return 0;
 }
