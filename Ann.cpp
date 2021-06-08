@@ -8,7 +8,7 @@ class Matrix{
     int row;
     vector<float> values;
   public:
-    Matrix(int r, int c,int random=0)
+    void initialize(int r, int c,int random=0)
     {   row=r;
         col=c;
         srand( (unsigned)time( NULL ) );
@@ -52,7 +52,8 @@ class Matrix{
     Matrix operator*(Matrix mat2)
     {
         if(col==mat2.row){
-            Matrix output(row,mat2.col);
+            Matrix output;
+            output.initialize(row,mat2.col);
             int r=row;
             int c=mat2.col;
             for (int i=0;i<r;i++){
@@ -72,7 +73,8 @@ class Matrix{
      Matrix operator +(Matrix mat2)
     {
         if(col==mat2.col && row==mat2.row){
-            Matrix output(row,col);
+            Matrix output;
+            output.initialize(row,col);
             int r=row;
             int c=col;
             for (int i=0;i<r;i++){
@@ -83,6 +85,40 @@ class Matrix{
             return output;
         }
     }
+    
+    Matrix operator -(Matrix mat2)
+    {
+        if(col==mat2.col && row==mat2.row){
+            Matrix output;
+            output.initialize(row,col);
+            int r=row;
+            int c=col;
+            for (int i=0;i<r;i++){
+                for (int j=0;j<c;j++){
+                    output.values[output.ind(i,j)]=value_at(i,j)-mat2.value_at(i,j);
+                }
+            }
+            return output;
+        }
+    }
+    
+    
+    Matrix multiply(float x)
+    {
+        if(col==mat2.col && row==mat2.row){
+            Matrix output;
+            output.initialize(row,col);
+            int r=row;
+            int c=col;
+            for (int i=0;i<r;i++){
+                for (int j=0;j<c;j++){
+                    output.values[output.ind(i,j)]=value_at(i,j)*x
+                }
+            }
+            return output;
+        }
+    }
+    
 };
 Matrix Transpose(Matrix mat)
 {
@@ -100,18 +136,35 @@ Matrix Transpose(Matrix mat)
 }
 
     
-
-class Linear
-{   public:
+class Layer
+{
+    virtual Matrix Forward() = 0;
+    virtual Matrix Backward() = 0;
     
+    
+};
+
+class Linear:Layer
+{
+    public:
+    
+    Matrix weight;
+    public:
     Linear(int prev_dimension,int curr_dimension)
     {
-        Matrix weight(prev_dimension,curr_dimension);
+        
+        weight.initialize(prev_dimension,curr_dimension,1);
         //Matrix bias(1,curr_dimension);
     }
-    Forward(Matrix input)
+    Matrix Forward(Matrix input)
     {
-        Matrix out=intput*weight
+        Matrix out=input*weight;
+        return out
+    }
+    Matrix Backward(Matrix input ,Matrix error)
+    {
+        
+        
     }
 };
 class ANN
