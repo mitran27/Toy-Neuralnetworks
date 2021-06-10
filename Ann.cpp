@@ -227,6 +227,26 @@ class ANN
     void add(Layer  *lay){
         Model.push_back(lay);
     }
+    Matrix cost(Matrix &prediction ,Matrix &Target){
+        Matrix err=Target-prediction
+        return err
+    }
+    
+    void epoch(Matrix Input,Matrix Output,float lr)
+    {   Matrix ip=Input
+        for (int i=0;i<Model.size();i++){
+            inputs.push_back(ip)
+            Matrix op=Model[i]->forward(ip)
+            ip=op
+        }
+        Matrix err=cost(ip,Output)
+        for (int i=Model.size()-1;i<=0;i--){
+            Matrix ip_lay=inputs[i]
+            err=Model[i]->backward(ip,err,lr)
+        }
+        
+    }
+    
     void summary(){
         
         for (int i=0;i<Model.size();i++){
