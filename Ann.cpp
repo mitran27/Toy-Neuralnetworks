@@ -1,6 +1,9 @@
+// Online C++ compiler to run C++ program online
 #include <iostream>
 #include <vector>
 # include <assert.h>
+# include <string>
+#include <unordered_map>
 
 using namespace std;
 
@@ -14,13 +17,13 @@ class Matrix{
     {   row=r;
         col=c;
         srand( (unsigned)time( NULL ) );
-        float data[]={-0.38, -0.83, -0.89, 0.45, 0.47, 0.6, -0.29, -0.68, -0.87,-0.4, -0.47, -0.1, 0.56, -0.21, -0.38, 0.06, -0.26, -0.6, -0.65, -0.46, -0.23, 0.46, 0.69, 0.61, 0.59, -0.88, 0.15, -0.15, 0.55, -0.5, 0.86, 0.6, 0.03, 0.14, -0.13, 0.44, 0.7, -0.35, -0.16, -0.94, -0.61, 0.16, -0.51, 0.85, -0.05, 0.52, -0.9, 0.72, -0.34, 0.3};
+        float data[]={-0.38, 0.83, -0.89, 0.45, 0.47, 0.6, -0.29, -0.68, 0.87,0.4, -0.47, 0.1, 0.56, 0.21, -0.38, 0.06, -0.26, 0.6, -0.65, -0.46, 0.23, 0.46, 0.69, 0.61, 0.59, 0.88, 0.15, -0.15, 0.55, -0.5, 0.86, 0.6, 0.03, 0.14, -0.13, 0.44, 0.7, -0.35, -0.16, 0.94, -0.61, 0.16, 0.51, 0.85, -0.05, 0.52, -0.9, 0.72, -0.34, 0.3};
 
         for (int i =0; i < r*c; i++){
               //float r=(float)rand()/RAND_MAX; 
               float r=data[i];
               if(random)
-              values.push_back(r-0.5);
+              values.push_back(r);
               else
               values.push_back(0);
               
@@ -231,6 +234,53 @@ class Linear:public Layer
         cout<<"linear  in-dim  : "<<*x<<" out-dim : "<<*(x+1);
     }
 };
+
+class Acivation:public Layer
+{
+    public:
+    char *actfn;
+    unordered_map<string, ()> actviations_list;
+    Acivation(int function)
+    {
+        actfn=function;
+        //weight.initialize(prev_dimension,curr_dimension,1);
+        //Matrix bias(1,curr_dimension);
+    }
+    Matrix Forward(Matrix input)
+    {
+        Matrix out=weight.Applyfunction();
+        
+        
+        return out;
+    }
+    Matrix Backward(Matrix input ,Matrix error,float lr)
+    {
+        
+        Matrix tran_wt=Transpose(weight);
+        Matrix input_error=error*tran_wt;
+        
+        Matrix tran_ip=Transpose(input);
+        Matrix weight_error=tran_ip*error;
+        
+        Matrix err=weight_error.multiply(lr);
+        weight=weight-err;
+        
+        return input_error;
+        
+        
+    }
+    void print_weight(){
+        weight.print();
+    }
+    void summary()
+    {
+        int *x;
+        x=weight.shape();
+        cout<<"linear  in-dim  : "<<*x<<" out-dim : "<<*(x+1);
+    }
+};
+
+
 class ANN
 {
     public :
