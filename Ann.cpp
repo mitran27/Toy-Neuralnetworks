@@ -234,21 +234,33 @@ class Linear:public Layer
         cout<<"linear  in-dim  : "<<*x<<" out-dim : "<<*(x+1);
     }
 };
+inline float Sigmoid(float x)
+    {
+        return 1.0f / (1 + exp(-x));
+    }
 
+ 
+inline float DSigmoid(float x)
+    {
+        return (x * (1 - x));
+    }
 class Acivation:public Layer
 {
     public:
     char *actfn;
-    unordered_map<string, ()> actviations_list;
-    Acivation(int function)
+    unordered_map<string, int> actviations_list;
+    Acivation(char * function)
     {
         actfn=function;
-        //weight.initialize(prev_dimension,curr_dimension,1);
-        //Matrix bias(1,curr_dimension);
+        cout<<avtfn;
     }
     Matrix Forward(Matrix input)
-    {
-        Matrix out=weight.Applyfunction();
+    { 
+        
+        if(actfn.compare("sigmoid")==0){
+            Matrix out=weight.Applyfunction(Sigmoid);
+        }
+        
         
         
         return out;
