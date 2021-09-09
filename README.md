@@ -12,13 +12,17 @@ build basic architecture of neural networks from scratch
 <ol>
 Implemented the Feedforwardnetwork/Dense/Linear Layer along with required activation function for nonlinearity
 and compiled the linear layer and activation functions with required function using the SEQUENTIAL Model 
-The sequential Model is architect to handle 
+The sequential Model is architect to handle  
+  <ol>
 
 <li>adding layers</li>
 <li>forward propagation</li>
 <li>calculating gradients </li>
 <li>backward propagation</li>
 <li>inference</li>
+  </ol>
+  
+  Built using c++ and python
 
 
 </ol>
