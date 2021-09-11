@@ -26,3 +26,16 @@ The sequential Model is architect to handle
 
 
 </ol>
+
+<h2> Cnn </h2>
+
+Implemented and added a CNN layer with forward and backward bass using sliding window technique and Added with ANN module
+
+
+<h2> RNN </h2>
+
+Implemented a reccurent neural network module which handles sequence of data using a recurrent Ann network with some activation functions ( context analysis ) for sentiment analysis
+
+<h2> LSTM </h2>
+
+Implemented a LSTM module similar to RNN architecture with high level architecture ,logical fates and activation function (very high context analysis ) like forget,reset,update gates for text Generation
